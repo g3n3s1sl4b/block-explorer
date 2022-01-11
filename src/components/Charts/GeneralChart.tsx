@@ -1,5 +1,7 @@
 import React from 'react'
+import { TickFormatter } from '@visx/axis'
 import { LinearGradient } from '@visx/gradient'
+import { AnyD3Scale, ScaleInput } from '@visx/scale'
 import {
   buildChartTheme,
   Axis,
@@ -27,9 +29,15 @@ type Props = {
   yAccessor: (metric: Metric) => number
   data: Metric[]
   marginLeft: number
+  leftAxisFormatter?: TickFormatter<ScaleInput<AnyD3Scale>>
 }
 
-export default function GeneralChart({ data, marginLeft, yAccessor }: Props) {
+export default function GeneralChart({
+  data,
+  marginLeft,
+  yAccessor,
+  leftAxisFormatter,
+}: Props) {
   const xAccessor = (metric: Metric) => metric.date
 
   return (
@@ -56,7 +64,13 @@ export default function GeneralChart({ data, marginLeft, yAccessor }: Props) {
         yAccessor={yAccessor}
         strokeWidth={2}
       />
-      <Axis orientation='left' numTicks={8} tickTransform='translate(-8, 0)' hideAxisLine />
+      <Axis
+        orientation='left'
+        numTicks={8}
+        tickTransform='translate(-8, 0)'
+        hideAxisLine
+        tickFormat={leftAxisFormatter}
+      />
       <Axis
         orientation='bottom'
         numTicks={5}

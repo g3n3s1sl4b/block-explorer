@@ -13,5 +13,5 @@ export default function BlockTime({ data }: Props) {
     [],
   )
 
-  return <GeneralChart data={data} marginLeft={30} yAccessor={yAccessor} />
+  return <GeneralChart data={data} marginLeft={50} yAccessor={yAccessor} />
 }
