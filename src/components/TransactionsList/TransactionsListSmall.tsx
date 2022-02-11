@@ -14,6 +14,7 @@ import { getIRFAmountWithCurrency } from '../../utils/currency'
 import { getTransactionDetailPageUrl } from '../../utils/routes'
 import { getDisplayShortHash } from '../../utils/string'
 import BoxWrapper from '../BoxWrapper/BoxWrapper'
+import SmallChip from '../SmallChip/SmallChip'
 
 interface Prop {
   transactions: Transactions
@@ -27,41 +28,47 @@ const TransactionsListSmall = ({ blockHash, transactions }: Prop) => {
 
   return (
     <BoxWrapper header={t('app.transactionsContainer.title')}>
-      {transactions.map((transaction, index) => (
-        <div
-          key={transaction.hash}
-          className={classNames(classes.item, {
-            [classes.firstItem]: index === 0,
-          })}
-        >
-          <div className={classes.content}>
-            <Typography variant='subtitle2'>
-              {t('app.components.transactionslist.hash')}
-            </Typography>
-            <Typography variant='body1'>
-              <Link
-                className={classes.link}
-                to={getTransactionDetailPageUrl(blockHash, transaction.hash)}
-              >
-                <img src={transactionIcon} role='presentation' />
-                {getDisplayShortHash(transaction.hash)}
-              </Link>
-            </Typography>
+      {transactions.map(({ hash, fee = '0', size }, index) => {
+        const isMinersFee = fee[0] === '-'
+        return (
+          <div
+            key={hash}
+            className={classNames(classes.item, {
+              [classes.firstItem]: index === 0,
+            })}
+          >
+            <div className={classes.content}>
+              <Typography variant='subtitle2'>
+                {t('app.components.transactionslist.hash')}
+              </Typography>
+              <Typography variant='body1'>
+                <Link
+                  className={classes.link}
+                  to={getTransactionDetailPageUrl(blockHash, hash)}
+                >
+                  <img src={transactionIcon} role='presentation' />
+                  {getDisplayShortHash(hash)}
+                </Link>
+              </Typography>
+            </div>
+            <div className={classes.content}>
+              <Typography variant='subtitle2'>
+                {t('app.components.transactionslist.fee')}
+              </Typography>
+              <Typography variant='body1'>{getIRFAmountWithCurrency(fee)}</Typography>
+              {isMinersFee && (
+                <SmallChip text={t('app.components.transactionslist.minersFee')} />
+              )}
+            </div>
+            <div className={classes.content}>
+              <Typography variant='subtitle2'>
+                {t('app.components.transactionslist.bytes')}
+              </Typography>
+              <Typography variant='body1'>{getDisplaySizeInBytes(size)}</Typography>
+            </div>
           </div>
-          <div className={classes.content}>
-            <Typography variant='subtitle2'>
-              {t('app.components.transactionslist.fee')}
-            </Typography>
-            <Typography variant='body1'>{getIRFAmountWithCurrency(transaction.fee)}</Typography>
-          </div>
-          <div className={classes.content}>
-            <Typography variant='subtitle2'>
-              {t('app.components.transactionslist.bytes')}
-            </Typography>
-            <Typography variant='body1'>{getDisplaySizeInBytes(transaction.size)}</Typography>
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </BoxWrapper>
   )
 }
