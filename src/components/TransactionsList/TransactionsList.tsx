@@ -73,11 +73,10 @@ const TransactionsList = (props: Prop) => {
                   </StyledTableCell>
                   <StyledTableCell
                     align='right'
-                    title={t(
-                      'app.components.transactionslist.conversion',
-                      formattedFee,
-                      ORE_TO_IRON.toLocaleString(),
-                    )}
+                    title={t('app.components.transactionslist.conversion', {
+                      raw: formattedFee,
+                      conversionRate: ORE_TO_IRON.toLocaleString(),
+                    })}
                   >
                     {getIRFAmountWithCurrency(fee)}
                   </StyledTableCell>
