@@ -74,7 +74,7 @@ const TransactionsList = (props: Prop) => {
                   <StyledTableCell
                     align='right'
                     title={t(
-                      'app.components.transactionslist.converstion',
+                      'app.components.transactionslist.conversion',
                       formattedFee,
                       ORE_TO_IRON.toLocaleString(),
                     )}
