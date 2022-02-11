@@ -27,6 +27,9 @@ interface Prop {
 }
 const useStyles = makeStyles(transactionsList)
 
+// TODO: is the miner's fee always -2000000000?
+const MINERS_FEE = '-2000000000'
+
 const TransactionsList = (props: Prop) => {
   const { blockHash, transactions } = props
   const { t } = useTranslation()
@@ -55,6 +58,8 @@ const TransactionsList = (props: Prop) => {
             {transactions.map((transaction) => {
               // eslint-disable-next-line no-console
               console.log({ transaction, feeType: transaction.fee })
+              const { fee = '0' } = transaction
+              const isMinersFee = fee === MINERS_FEE
               return (
                 <StyledTableRow key={transaction.hash}>
                   <StyledTableCell scope='row'>
@@ -65,7 +70,9 @@ const TransactionsList = (props: Prop) => {
                       </div>
                     </Link>
                   </StyledTableCell>
-                  <StyledTableCell align='right'></StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {isMinersFee && `Miner's Fee`}
+                  </StyledTableCell>
                   <StyledTableCell align='right'>
                     {getIRFAmountWithCurrency(transaction.fee)}
                   </StyledTableCell>
