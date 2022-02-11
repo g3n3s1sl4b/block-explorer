@@ -67,11 +67,17 @@ const TransactionsList = (props: Prop) => {
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align='right'>
-                    {isMinersFee && <SmallChip text={`Miner's Fee`} />}
+                    {isMinersFee && (
+                      <SmallChip text={t('app.components.transactionslist.minersFee')} />
+                    )}
                   </StyledTableCell>
                   <StyledTableCell
                     align='right'
-                    title={`Raw: ${formattedFee} ($ORE to $IRON: ${ORE_TO_IRON.toLocaleString()} to 1)`}
+                    title={t(
+                      'app.components.transactionslist.converstion',
+                      formattedFee,
+                      ORE_TO_IRON.toLocaleString(),
+                    )}
                   >
                     {getIRFAmountWithCurrency(fee)}
                   </StyledTableCell>

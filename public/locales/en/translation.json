@@ -54,6 +54,8 @@
       },
       "transactionslist": {
         "hash": "Hash",
+        "minersFee": "Miner's Fee",
+        "conversion": "Raw: {{raw} ($ORE to $IRON: {{conversionRate}} to 1)",
         "fee": "Fee",
         "bytes": "Bytes",
         "actions": "Actions"
