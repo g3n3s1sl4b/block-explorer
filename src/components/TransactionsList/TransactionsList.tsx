@@ -31,7 +31,6 @@ const TransactionsList = (props: Prop) => {
   const { blockHash, transactions } = props
   const { t } = useTranslation()
   const classes = useStyles()
-
   const theme = useTheme()
   const isSmallBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   if (isSmallBreakpoint) return <TransactionsListSmall {...props} />
@@ -53,25 +52,29 @@ const TransactionsList = (props: Prop) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((transaction) => (
-              <StyledTableRow key={transaction.hash}>
-                <StyledTableCell scope='row'>
-                  <Link to={getTransactionDetailPageUrl(blockHash, transaction.hash)}>
-                    <div className={classes.root}>
-                      <img src={transactionIcon} role='presentation' />
-                      {transaction.hash.toUpperCase()}
-                    </div>
-                  </Link>
-                </StyledTableCell>
-                <StyledTableCell align='right'></StyledTableCell>
-                <StyledTableCell align='right'>
-                  {getIRFAmountWithCurrency(transaction.fee)}
-                </StyledTableCell>
-                <StyledTableCell align='right'>
-                  {getDisplaySizeInBytes(transaction.size)}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {transactions.map((transaction) => {
+              // eslint-disable-next-line no-console
+              console.log({ transaction, feeType: transaction.fee })
+              return (
+                <StyledTableRow key={transaction.hash}>
+                  <StyledTableCell scope='row'>
+                    <Link to={getTransactionDetailPageUrl(blockHash, transaction.hash)}>
+                      <div className={classes.root}>
+                        <img src={transactionIcon} role='presentation' />
+                        {transaction.hash.toUpperCase()}
+                      </div>
+                    </Link>
+                  </StyledTableCell>
+                  <StyledTableCell align='right'></StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {getIRFAmountWithCurrency(transaction.fee)}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {getDisplaySizeInBytes(transaction.size)}
+                  </StyledTableCell>
+                </StyledTableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
