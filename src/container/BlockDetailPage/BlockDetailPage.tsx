@@ -46,8 +46,6 @@ const BlockDetailPage = (): JSX.Element => {
   )
 
   const blockData = service.status === ServiceState.LOADED && service.payload.result
-  // eslint-disable-next-line no-console
-  console.log({ blockData, queryParams })
 
   return (
     <Container>

@@ -53,19 +53,16 @@ const TransactionsList = (props: Prop) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((transaction) => {
-              // eslint-disable-next-line no-console
-              console.log({ transaction, feeType: transaction.fee })
-              const { fee = '0' } = transaction
+            {transactions.map(({ fee = '0', hash, size }) => {
               const formattedFee = parseInt(fee).toLocaleString()
               const isMinersFee = fee[0] === '-'
               return (
-                <StyledTableRow key={transaction.hash}>
+                <StyledTableRow key={hash}>
                   <StyledTableCell scope='row'>
-                    <Link to={getTransactionDetailPageUrl(blockHash, transaction.hash)}>
+                    <Link to={getTransactionDetailPageUrl(blockHash, hash)}>
                       <div className={classes.root}>
                         <img src={transactionIcon} role='presentation' />
-                        {transaction.hash.toUpperCase()}
+                        {hash.toUpperCase()}
                       </div>
                     </Link>
                   </StyledTableCell>
@@ -76,11 +73,9 @@ const TransactionsList = (props: Prop) => {
                     align='right'
                     title={`Raw: ${formattedFee} ($ORE to $IRON: ${ORE_TO_IRON.toLocaleString()} to 1)`}
                   >
-                    {getIRFAmountWithCurrency(transaction.fee)}
+                    {getIRFAmountWithCurrency(fee)}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>
-                    {getDisplaySizeInBytes(transaction.size)}
-                  </StyledTableCell>
+                  <StyledTableCell align='right'>{getDisplaySizeInBytes(size)}</StyledTableCell>
                 </StyledTableRow>
               )
             })}

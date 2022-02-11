@@ -58,7 +58,6 @@ describe('Currency utils', () => {
     ]
     fixture.map(([i, o]) => {
       expect(getNumberToUnit(i)).toEqual(o)
-      // expect(getNumberToUnitOld(i)).toEqual(o)
       if (i) {
         expect(getNumberToUnit(-1 * i)).toEqual('-' + o)
       }
