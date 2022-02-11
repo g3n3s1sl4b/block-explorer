@@ -20,15 +20,13 @@ import BoxWrapper from '../BoxWrapper/BoxWrapper'
 import transactionIcon from '../../assets/images/breadcrumb/transaction.svg'
 import transactionsList from '../../assets/jss/components/TransactionsList/transactionsList'
 import TransactionsListSmall from './TransactionsListSmall'
+import SmallChip from '../../components/SmallChip/SmallChip'
 
 interface Prop {
   transactions: Transactions
   blockHash: string
 }
 const useStyles = makeStyles(transactionsList)
-
-// TODO: is the miner's fee always -2000000000?
-const MINERS_FEE = '-2000000001'
 
 const TransactionsList = (props: Prop) => {
   const { blockHash, transactions } = props
@@ -59,7 +57,7 @@ const TransactionsList = (props: Prop) => {
               // eslint-disable-next-line no-console
               console.log({ transaction, feeType: transaction.fee })
               const { fee = '0' } = transaction
-              const isMinersFee = fee === MINERS_FEE
+              const isMinersFee = fee[0] === '-'
               return (
                 <StyledTableRow key={transaction.hash}>
                   <StyledTableCell scope='row'>
@@ -71,7 +69,7 @@ const TransactionsList = (props: Prop) => {
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align='right'>
-                    {isMinersFee && `Miner's Fee`}
+                    {isMinersFee && <SmallChip text={`Miner's Fee`} />}
                   </StyledTableCell>
                   <StyledTableCell align='right'>
                     {getIRFAmountWithCurrency(transaction.fee)}
