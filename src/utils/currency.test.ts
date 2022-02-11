@@ -1,4 +1,4 @@
-import { getNumberToUnit, getNumberToUnitOld, getIRFAmountWithCurrency } from './currency'
+import { getNumberToUnit, getIRFAmountWithCurrency } from './currency'
 
 describe('Currency utils', () => {
   test('getIRFAmountWithCurrency returns the right string', () => {
@@ -58,7 +58,7 @@ describe('Currency utils', () => {
     ]
     fixture.map(([i, o]) => {
       expect(getNumberToUnit(i)).toEqual(o)
-      expect(getNumberToUnitOld(i)).toEqual(o)
+      // expect(getNumberToUnitOld(i)).toEqual(o)
       if (i) {
         expect(getNumberToUnit(-1 * i)).toEqual('-' + o)
       }

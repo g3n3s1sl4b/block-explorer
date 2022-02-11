@@ -14,7 +14,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Transactions } from '../../types/Transaction'
 import { StyledTableCell, StyledTableRow } from '../../components/Table/Table'
 import { getTransactionDetailPageUrl } from '../../utils/routes'
-import { getIRFAmountWithCurrency } from '../../utils/currency'
+import { getIRFAmountWithCurrency, ORE_TO_IRON } from '../../utils/currency'
 import { getDisplaySizeInBytes } from '../../utils/size'
 import BoxWrapper from '../BoxWrapper/BoxWrapper'
 import transactionIcon from '../../assets/images/breadcrumb/transaction.svg'
@@ -57,6 +57,7 @@ const TransactionsList = (props: Prop) => {
               // eslint-disable-next-line no-console
               console.log({ transaction, feeType: transaction.fee })
               const { fee = '0' } = transaction
+              const formattedFee = parseInt(fee).toLocaleString()
               const isMinersFee = fee[0] === '-'
               return (
                 <StyledTableRow key={transaction.hash}>
@@ -71,7 +72,10 @@ const TransactionsList = (props: Prop) => {
                   <StyledTableCell align='right'>
                     {isMinersFee && <SmallChip text={`Miner's Fee`} />}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>
+                  <StyledTableCell
+                    align='right'
+                    title={`Raw: ${formattedFee} ($ORE to $IRON: ${ORE_TO_IRON.toLocaleString()} to 1)`}
+                  >
                     {getIRFAmountWithCurrency(transaction.fee)}
                   </StyledTableCell>
                   <StyledTableCell align='right'>
