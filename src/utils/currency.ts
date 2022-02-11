@@ -3,6 +3,8 @@ const ORE_TICKER = '$ORE'
 const IRON_TICKER = '$IRON'
 
 export const getIRFAmountWithCurrency = (amount: number | undefined): string => {
+  // eslint-disable-next-line no-console
+  console.log({ amount, type: typeof amount })
   if (!amount) return '0'
 
   // display $IRON for >=1 IRON
