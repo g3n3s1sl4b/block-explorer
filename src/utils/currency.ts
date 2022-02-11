@@ -2,10 +2,12 @@ const ORE_TO_IRON = 100000000
 const ORE_TICKER = '$ORE'
 const IRON_TICKER = '$IRON'
 
-export const getIRFAmountWithCurrency = (amount: number | undefined): string => {
+export const getIRFAmountWithCurrency = (raw: string | undefined): string => {
+  if (!raw) return '0'
+
+  const amount = parseInt(raw)
   // eslint-disable-next-line no-console
   console.log({ amount, type: typeof amount })
-  if (!amount) return '0'
 
   // display $IRON for >=1 IRON
   if (amount > ORE_TO_IRON) {

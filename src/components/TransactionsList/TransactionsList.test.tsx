@@ -19,7 +19,7 @@ describe('<TransactionsList />', () => {
             size: 1156,
             spends: [],
             notes: [],
-            fee: 0.03283901,
+            fee: '0.03283901',
           },
           {
             id: 2,
@@ -27,7 +27,7 @@ describe('<TransactionsList />', () => {
             size: 1156,
             spends: [],
             notes: [],
-            fee: 0.01083901,
+            fee: '0.01083901',
           },
         ]}
       />,
