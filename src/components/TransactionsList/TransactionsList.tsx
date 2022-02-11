@@ -28,7 +28,7 @@ interface Prop {
 const useStyles = makeStyles(transactionsList)
 
 // TODO: is the miner's fee always -2000000000?
-const MINERS_FEE = '-2000000000'
+const MINERS_FEE = '-2000000001'
 
 const TransactionsList = (props: Prop) => {
   const { blockHash, transactions } = props
