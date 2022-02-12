@@ -57,7 +57,10 @@ const TransactionsListSmall = ({ blockHash, transactions }: Prop) => {
               </Typography>
               <Typography variant='body1'>{getIRFAmountWithCurrency(fee)}</Typography>
               {isMinersFee && (
-                <SmallChip text={t('app.components.transactionslist.minersFee')} />
+                <SmallChip
+                  style={{ marginTop: '0.5rem' }}
+                  text={t('app.components.transactionslist.minersFee')}
+                />
               )}
             </div>
             <div className={classes.content}>
