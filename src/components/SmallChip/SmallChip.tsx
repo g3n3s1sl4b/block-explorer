@@ -22,15 +22,17 @@ const useStyles = makeStyles(() =>
 interface Prop {
   text: string
   inline?: boolean
+  style?: Record<string, string>
 }
 
-export default function SmallChip({ text, inline }: Prop) {
+export default function SmallChip({ text, inline, style = {} }: Prop) {
   const { t } = useTranslation()
   const classes = useStyles()
 
   return (
     <Chip
       size='small'
+      style={style}
       className={classNames(classes.root, {
         [classes.inline]: inline,
       })}

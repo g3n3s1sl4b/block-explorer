@@ -14,12 +14,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Transactions } from '../../types/Transaction'
 import { StyledTableCell, StyledTableRow } from '../../components/Table/Table'
 import { getTransactionDetailPageUrl } from '../../utils/routes'
-import { getIRFAmountWithCurrency } from '../../utils/currency'
+import { getIRFAmountWithCurrency, ORE_TO_IRON } from '../../utils/currency'
 import { getDisplaySizeInBytes } from '../../utils/size'
 import BoxWrapper from '../BoxWrapper/BoxWrapper'
 import transactionIcon from '../../assets/images/breadcrumb/transaction.svg'
 import transactionsList from '../../assets/jss/components/TransactionsList/transactionsList'
 import TransactionsListSmall from './TransactionsListSmall'
+import SmallChip from '../../components/SmallChip/SmallChip'
 
 interface Prop {
   transactions: Transactions
@@ -31,7 +32,6 @@ const TransactionsList = (props: Prop) => {
   const { blockHash, transactions } = props
   const { t } = useTranslation()
   const classes = useStyles()
-
   const theme = useTheme()
   const isSmallBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   if (isSmallBreakpoint) return <TransactionsListSmall {...props} />
@@ -53,25 +53,37 @@ const TransactionsList = (props: Prop) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((transaction) => (
-              <StyledTableRow key={transaction.hash}>
-                <StyledTableCell scope='row'>
-                  <Link to={getTransactionDetailPageUrl(blockHash, transaction.hash)}>
-                    <div className={classes.root}>
-                      <img src={transactionIcon} role='presentation' />
-                      {transaction.hash.toUpperCase()}
-                    </div>
-                  </Link>
-                </StyledTableCell>
-                <StyledTableCell align='right'></StyledTableCell>
-                <StyledTableCell align='right'>
-                  {getIRFAmountWithCurrency(transaction.fee)}
-                </StyledTableCell>
-                <StyledTableCell align='right'>
-                  {getDisplaySizeInBytes(transaction.size)}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {transactions.map(({ fee = '0', hash, size }) => {
+              const formattedFee = BigInt(fee).toLocaleString()
+              const isMinersFee = fee[0] === '-'
+              return (
+                <StyledTableRow key={hash}>
+                  <StyledTableCell scope='row'>
+                    <Link to={getTransactionDetailPageUrl(blockHash, hash)}>
+                      <div className={classes.root}>
+                        <img src={transactionIcon} role='presentation' />
+                        {hash.toUpperCase()}
+                      </div>
+                    </Link>
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {isMinersFee && (
+                      <SmallChip text={t('app.components.transactionslist.minersFee')} />
+                    )}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align='right'
+                    title={t('app.components.transactionslist.conversion', {
+                      raw: formattedFee,
+                      conversionRate: ORE_TO_IRON.toLocaleString(),
+                    })}
+                  >
+                    {getIRFAmountWithCurrency(fee)}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>{getDisplaySizeInBytes(size)}</StyledTableCell>
+                </StyledTableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

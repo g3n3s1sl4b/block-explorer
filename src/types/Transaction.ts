@@ -5,7 +5,7 @@ import { Spends } from './Spend'
 interface ParsedTransaction {
   id: number
   hash: string
-  fee?: number
+  fee?: string
   size: string
   notes: Notes
   spends: Spends
