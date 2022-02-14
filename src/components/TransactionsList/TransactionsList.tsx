@@ -54,7 +54,7 @@ const TransactionsList = (props: Prop) => {
           </TableHead>
           <TableBody>
             {transactions.map(({ fee = '0', hash, size }) => {
-              const formattedFee = parseInt(fee).toLocaleString()
+              const formattedFee = BigInt(fee).toLocaleString()
               const isMinersFee = fee[0] === '-'
               return (
                 <StyledTableRow key={hash}>

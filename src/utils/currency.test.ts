@@ -23,7 +23,6 @@ describe('Currency utils', () => {
       ['12340145660606012467', '123.40B $IRON'],
       ['12340145660600006012467', '123.40T $IRON'],
       ['12340145660600000006012467', '123.40Q $IRON'],
-      // ['-2000000000', '-20 $IRON'],
     ]
     fixture.map(([input, output]) => {
       const int = parseInt(input)
