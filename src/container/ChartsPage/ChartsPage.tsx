@@ -97,7 +97,7 @@ const ChartsPage = () => {
               <UniqueGraffiti data={metricsData} />
             </ChartBox>
 
-            <ChartBox header='Difficulty (in billions)'>
+            <ChartBox header='Difficulty (in trillions)'>
               <Difficulty data={metricsData} />
             </ChartBox>
 
