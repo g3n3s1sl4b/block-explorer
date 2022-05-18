@@ -12,6 +12,9 @@ import headerStyle from '../../assets/jss/components/Header/headerStyle'
 import logo from '../../assets/images/logo.svg'
 import { RoutePath } from '../../routes/routePath'
 import Search from '../../container/Search/Search'
+import { getApiUrl, ApiUrls } from '../../services/servicesUrls'
+import useGetService from '../../services/useGetService'
+import { ServiceState } from '../../types/Service'
 
 const useStyles = makeStyles(headerStyle)
 
@@ -27,9 +30,30 @@ interface Props {
   isTop?: boolean
 }
 
+type VersionData = {
+  ironfish: {
+    version: string
+  }
+}
+
 const Header = ({ isSticky, isTop, showSearch }: Props) => {
   const classes = useStyles()
   const { t } = useTranslation()
+  const $latestVersion = useGetService<string>(
+    getApiUrl(ApiUrls.VERSIONS),
+    {},
+    (x: VersionData) => x.ironfish.version,
+  )
+  const version = $latestVersion.status === ServiceState.LOADED && $latestVersion.payload.result
+  const versionChip = version ? (
+    <Button
+      href={`https://github.com/iron-fish/ironfish/releases/tag/v${version}`}
+      className={classes.versionChip}
+    >
+      Client v{version}
+    </Button>
+  ) : null
+
   return (
     <AppBar
       position='relative'
@@ -58,15 +82,18 @@ const Header = ({ isSticky, isTop, showSearch }: Props) => {
         </div>
       )}
       <Toolbar className={classes.toolbar}>
-        <Link to={RoutePath.Home}>
-          <img
-            src={logo}
-            alt={t('app.header.logo.alt')}
-            className={classNames(classes.logo, {
-              [classes.invisible]: !isTop && !isSticky,
-            })}
-          />
-        </Link>
+        <div className={classes.leftWrapper}>
+          <Link to={RoutePath.Home}>
+            <img
+              src={logo}
+              alt={t('app.header.logo.alt')}
+              className={classNames(classes.logo, {
+                [classes.invisible]: !isTop && !isSticky,
+              })}
+            />
+          </Link>
+          {versionChip}
+        </div>
         <div className={classes.search}>{showSearch && <Search />}</div>
         <div className={classes.rightWrapper}>
           <Button

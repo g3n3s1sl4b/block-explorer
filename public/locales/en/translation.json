@@ -17,7 +17,7 @@
       "logo": {
         "alt": "Iron Fish Block Explorer"
       },
-      "docs": "Developer Docs",
+      "docs": "Docs",
       "search": {
         "placeholder": "Search by graffiti, block height, hash, or transaction hash"
       },

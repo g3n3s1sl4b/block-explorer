@@ -8,6 +8,7 @@ export enum ApiUrls {
   SEARCH_BLOCKS = '/blocks?',
   SEARCH_TRANSACTIONS = '/transactions?',
   TRANSACTION_DETAIL_PAGE = '/transactions/find?',
+  VERSIONS = '/versions',
 }
 
 export function getApiUrl(url: ApiUrls): string {

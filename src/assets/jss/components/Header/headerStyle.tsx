@@ -53,6 +53,15 @@ const adStyle = (theme: Theme) =>
     toolbar: {
       padding: 0,
     },
+    leftWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      columnGap: '32px',
+      [theme.breakpoints.down('sm')]: {
+        left: 0,
+        columnGap: '12px',
+      },
+    },
     rightWrapper: {
       display: 'flex',
       alignItems: 'center',
@@ -65,10 +74,8 @@ const adStyle = (theme: Theme) =>
     button: {
       opacity: 1,
       display: 'block',
-      width: '145px',
       textAlign: 'center',
       [theme.breakpoints.down('sm')]: {
-        width: '120px',
         fontSize: '11px',
       },
     },
@@ -93,6 +100,27 @@ const adStyle = (theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(-2),
         marginBottom: theme.spacing(1),
+      },
+    },
+    versionChip: {
+      marginBottom: '6px',
+      fontSize: '12px',
+      background: '#f3f3f4',
+      borderRadius: '144px',
+      display: 'inline-block',
+      padding: '6px 16px',
+      fontFamily: 'mono-regular',
+      position: 'relative',
+      zIndex: 1000,
+      '&:hover': {
+        background: '#ffcd85',
+      },
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '-6px',
+        padding: '6px 8px',
+      },
+      [theme.breakpoints.down(480)]: {
+        display: 'none',
       },
     },
   })
